@@ -1,0 +1,43 @@
+{% extends 'dashboard/header.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Biotech Information Portal">
+    <meta name="author" content="Max Perez">
+    <title>Biotech Information Portal</title>
+    <link rel="icon" href="{% static 'pcps/images/favicon.ico' %}">
+  </head>
+  <body>
+    {% block homepagecontent%}
+      <h2>{{home_greeting}}</h2>
+      <br>
+      <br>
+      <div class="row">
+        <div class="column left">
+          <p align="right" >
+            <img src="{% static 'images/infrastructure.png' %}" height="255px" width="400px">           
+          </p><br>
+          <p align="right" >
+            <img src="{% static 'images/developteam.png' %}" height="200px" width="220px">           
+          </p>
+        </div>
+        <div class="column right">
+          <p style="font-size: 20px; margin-left: 5%; margin-right: 15%; width: 80%;" align="left"><b> Minuteman </b>is a cloud platform designed to <u>host visualization applications </u> (Shiny, Django, Dashboard etc.), <u>install 3rd party publicaly available or internal software/tools </u> and <u>perform computation</u>. This unique platform is specifically designed to work with external collaboration partners and affiliates of Company. The project aims to foster collaboration between data scientists, provide data visualization opportunities to bench scientists and involve them in the data analytics processes.</p>
+          <br>
+          <p style="font-size: 20px; margin-left: 5%; margin-right: 15%; width: 80%;" align="left">Minuteman is jointly developed by the Pulmonary Drug Discovery Lab (PH-RED-lab1), Joint Precision Cardiology Lab (PH-RED-Jlab2), Process Design, Infrastructure Support, Digital Technology and Business Excellence functions.</p>
+          <br>
+          <p style="font-size: 20px; margin-left: 5%; margin-right: 15%; width: 80%;" align="left">Minuteman is a part of overall digitalization efforts of Company labs.</p>
+        </div>
+      </div>
+      
+      
+<br>
+<br>
+      
+    {% endblock homepagecontent%}
+    
+  </body>
+</html>

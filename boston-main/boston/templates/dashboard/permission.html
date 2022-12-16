@@ -1,0 +1,29 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+    <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Login Information">
+    <style>
+        body { text-align: center; padding: 150px; }
+        h1 { font-size: 50px; }
+        body { font: 20px Helvetica, sans-serif; color: #333; }
+        article { display: block; text-align: left; width: 650px; margin: 0 auto; }
+        a { color: #dc8100; text-decoration: none; }
+        a:hover { color: #333; text-decoration: none; }
+        #blogo {
+        height:75px;
+        width: 75px;
+        margin-right:24px;
+        }
+    </style>
+    </head>
+    <body>
+        <article>
+            <div>            
+            <p>You are not given permission to view the contents, please <a href="mailto:minuteman_admin@Company.com">contact us</a> with E-mail and list your primary CWID(Company internal users) or Email address(External users) and reason for requesting access. If you are already given the permission, please <a href="mailto:minuteman_admin@Company.com">contact our system administrator</a> for details.</p>
+            <p>&mdash; Company Minuteman Devops Team</p>
+            </div>
+        </article>
+    </body>
+    
+{% endblock content %}

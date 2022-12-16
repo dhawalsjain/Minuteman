@@ -1,0 +1,50 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block header %}
+<div class="panel with-nav-tabs panel-primary">
+    <div class='breadcrumbs' style="height: 40px">
+    </div>
+</div>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.left {
+  width: 50%;
+}
+
+.right {
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+<div class="row">
+  <div class="column left">
+    <p align="center"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="padding: 10px 45px; width: 300px;" href="https://minuteman-rstudio-dev.Company-boston.com/"> Minuteman Rstudio </a></p><br>
+    <p style="font-size: 20px; width: 80%;"  ><b>Instructions for Minuteman Rstudio</b></p>
+    <p style="font-size: 20px; width: 80%;"  >Setup password through Jupyterhub terminal</p>
+  </div>
+  <div class="column right">
+    <p align="center"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="padding: 10px 45px; width: 300px;" href=""> S@@S Rstido </a></p><br>
+    <p style="font-size: 20px; width: 80%;"  ><b>Instructions for S@@S Rstudio</b></p>
+    <p style="font-size: 20px; width: 80%;"  >Under constructions</p>
+  </div>
+</div>
+{% endblock header %}
+

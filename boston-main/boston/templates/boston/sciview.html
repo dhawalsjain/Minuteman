@@ -1,0 +1,44 @@
+<head>
+    <meta name="description" content="Company PDD data and charts">
+</head>
+<style>
+body, html {
+    height: 100%;
+    margin: 0;
+}
+.fullScreen {
+    width: 99%;
+    height: 99%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-y: hidden;
+}
+</style>
+<body scroll="no">
+<div id="contents"></div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $.getJSON('{% url "sciview_contents" %}', function (data) {
+
+      var iframe = document.createElement("iframe");
+      $('#contents').append(iframe);
+      //iframe.style.height = $(document).height(); 
+      //iframe.style.width = $(document).width(); 	    
+      iframe.contentWindow.document.open();
+      iframe.contentWindow.document.write(data.html_contents);
+      iframe.contentWindow.document.close();
+
+      document.getElementsByTagName("iframe")[0].className = "fullScreen";
+
+      // Attempt circumvention	    
+      if (iframe.contentWindow.WebSocket)
+          WebSocket = iframe.contentWindow.WebSocket;
+    });
+
+  });
+
+</script>

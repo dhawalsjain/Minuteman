@@ -1,0 +1,524 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Minuteman Dashboard">
+    <meta name="author" content="Max Perez">
+    <title>Minuteman Dashboard</title>
+    <link rel="icon" href="{% static 'pcps/images/favicon.ico' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- <script src="{% static 'pcps/js/excel-bootstrap-table-filter-bundle.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'pcps/js/excel-bootstrap-table-filter-style.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <style>
+        .wrap {
+            width: 300px;
+            position: relative;
+        }
+
+        .wrap img {
+            float: left;
+        }
+
+        .wrap h1 {
+            line-height: 60px;
+        }
+
+        .dropdown select {
+            cursor: pointer;
+            color: #1455a2;
+            font-weight: bold;
+            width: 300px;
+            height: 30px;
+            font-size: 1.5em;
+        }
+
+
+        select option {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .panel.with-nav-tabs .panel-heading {
+            padding: 5px 5px 0 5px;
+        }
+
+        .panel.with-nav-tabs .nav-tabs {
+            border-bottom: none;
+        }
+
+        .panel.with-nav-tabs .nav-justified {
+            margin-bottom: -1px;
+        }
+
+        /*** PANEL PRIMARY ***/
+        .with-nav-tabs.panel-primary .nav-tabs>li>a,
+        .with-nav-tabs.panel-primary .nav-tabs>li>a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs>li>a:focus {
+            color: #fff;
+        }
+
+        .with-nav-tabs.panel-primary .nav-tabs>.open>a,
+        .with-nav-tabs.panel-primary .nav-tabs>.open>a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs>.open>a:focus,
+        .with-nav-tabs.panel-primary .nav-tabs>li>a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs>li>a:focus {
+            color: #fff;
+            background-color: #3071a9;
+            border-color: transparent;
+        }
+
+        .with-nav-tabs.panel-primary .nav-tabs>li.active>a,
+        .with-nav-tabs.panel-primary .nav-tabs>li.active>a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs>li.active>a:focus {
+            color: #428bca;
+            background-color: #fff;
+            border-color: #428bca;
+            border-bottom-color: transparent;
+        }
+
+        .with-nav-tabs.panel-primary .nav-tabs>li.dropdown .dropdown-menu {
+            background-color: #428bca;
+            border-color: #3071a9;
+        }
+
+        .with-nav-tabs.panel-primary .nav-tabs>li.dropdown .dropdown-menu>li>a {
+            color: #fff;
+        }
+
+        .with-nav-tabs.panel-primary .nav-tabs>li.dropdown .dropdown-menu>li>a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs>li.dropdown .dropdown-menu>li>a:focus {
+            background-color: #3071a9;
+        }
+
+        .with-nav-tabs.panel-primary .nav-tabs>li.dropdown .dropdown-menu>.active>a,
+        .with-nav-tabs.panel-primary .nav-tabs>li.dropdown .dropdown-menu>.active>a:hover,
+        .with-nav-tabs.panel-primary .nav-tabs>li.dropdown .dropdown-menu>.active>a:focus {
+            background-color: #4a9fe9;
+        }
+
+        /********************************************************************/
+
+        .panel-height {
+            height: 800px;
+        }
+
+        .tab {
+            display: none;
+        }
+
+        #back2Top {
+            width: 40px;
+            line-height: 40px;
+            overflow: hidden;
+            z-index: 999;
+            display: none;
+            cursor: pointer;
+            -moz-transform: rotate(270deg);
+            -webkit-transform: rotate(270deg);
+            -o-transform: rotate(270deg);
+            -ms-transform: rotate(270deg);
+            transform: rotate(270deg);
+            position: fixed;
+            bottom: 50px;
+            right: 0;
+            background-color: #DDD;
+            color: #555;
+            text-align: center;
+            font-size: 30px;
+            text-decoration: none;
+        }
+
+        #back2Top:hover {
+            background-color: #DDF;
+            color: #000;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        div.centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ############# maxs additions ############################ */
+        #main {
+            height: 770px;
+            overflow-y: auto;
+            /* border: 1px solid gray; */
+        }
+
+        div.showtable {
+            width: 100%;
+            /*overflow-x: scroll; */
+            padding: 10px;
+        }
+
+        #highchart_container {
+            width: 1110px;
+            height: 400px;
+            margin-bottom:20px;
+            clear:both;
+        }
+        #plotly_container {
+            clear:both;
+        }
+
+        div.showtable table {
+            border-collapse: collapse;
+            width:100%;
+            display:block;
+        }
+
+        div.showtable td,
+        div.showtable th {
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        div.showtable td,
+        div.showtable th {
+            min-width: 120px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        div.showtable th {
+            /* 
+                background-color:#337ab7;
+                color:#fff; 
+                */
+            vertical-align: top;
+            padding: 5px;
+            border-bottom: 1px solid gray;
+        }
+
+        div.showtable th.wide,
+        div.showtable td.wide {
+            min-width: 140px;
+        }
+
+        /* .stripe {
+            background-color: #ddd;
+        }
+
+        .nostripe {
+            background-color: #fff;
+        } */
+        tr:nth-child(even) {
+            background-color: #ddd;
+        }
+
+        .header {
+            color: #fff;
+            background-color: #337ab7;
+            font-weight: bold;
+        }
+        .data_chart {
+            border: 1px solid gray;
+
+        }
+        #ambr_batch_data {
+            text-align: left;
+            display:none;
+            clear:both;
+            float: left;
+            margin-left: 10px;
+        }
+        #ambr_batch_data_toggle {
+            float: left;
+            margin-left: 10px;
+            clear:both;
+        }
+        #datadump_toggle_links{
+            width:300px;
+            float:left;
+            text-align:left;
+            padding-right:20px;
+        }
+        #datadump {
+            text-align:left;
+            width:100%;
+            float:left;
+            height:770px;
+            overflow-y: scroll;
+        }
+        .table_datadump {
+            border: 1px solid #337ab7;
+        }
+        .table_datadump th {
+            font-weight: bold;
+        }
+        .table_datadump th, td {
+            border: 1px solid #337ab7;
+            padding: 5px;
+        }
+        #ip_overview_item {
+            /* color:white; */
+            /* background-color:#337ab7; */
+            font-weight:bold;
+            width:200px;
+            padding:8px;
+            border: 1px solid #337ab7;
+        }
+        #ip_overview_item {
+            color:#337ab7;
+        }
+        #ip_overview_item a:link, a:hover, a:active, a:visited {
+            color: #337ab7;
+        }
+        #ip_detail_rundata_panel {
+            width:800px;
+            padding:10px;
+            text-align: left;
+            float:left;
+        }
+        #ip_detail_metadata_panel {
+            float:left; 
+            width:600px; 
+            text-align: left;
+            padding: 10px; 
+            float: left;
+        }
+        #ipTableauRundata {
+            border: 1px solid #337ab7;
+            margin-top:40px;
+        }
+        .breadcrumbs {
+            background-color: #3071a9;
+            padding:10px;
+            text-align:left;
+            font-weight: bold;
+            color: #fff;
+        }
+        .breadcrumbs>a:link, .breadcrumbs>a:visited, .breadcrumbs>a:hover {
+            
+            /* text-decoration: none; */
+            color:#fff;
+            /* 3071a9 */
+            font-weight: bold;
+        }
+        /* .panel-heading a:link {
+            text-decoration: none;
+            color:#fff;
+        } */
+
+        /* undoing bootsstrap styling to make page full width */
+        .container {
+            width:100%;
+        }
+        .panel {
+            border:none;
+        }
+        /* width adjustments */
+        .wrap {
+        width: 100%; /* 1150px */
+            position: relative;
+            text-align: left;
+            /*margin-left: 35px;*/
+        }
+        .wrap h1 {
+        /* line-height: 60px; */
+            margin-left: 110px;
+        }
+
+        /*  pipline edit  */
+        #project_milestones.table {
+            border:1px solid #337ab7; 
+            border-collapse: collapse;
+        }
+        #project_milestones td {
+            border:1px solid #337ab7; 
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        #milestone_table.th {
+            background-color: #337ab7;
+            color:#fff;
+            font-weight: bold;
+            border:1px solid #337ab7; 
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        #project_details_table.th {
+            background-color: #337ab7;
+            color:#fff;
+            font-weight: bold;
+            border:1px solid #337ab7; 
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        #milestone_table.th, 
+        #project_details_table.th,
+        #project_details th,
+        #project_milestones th {
+            /* background-color: #337ab7;
+            color:#fff; */
+            font-weight: bold;
+            border:1px solid #337ab7; 
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        #project_details {
+            margin: 40px 0px 40px 60px;
+        }
+        #project_milestones {
+            /* text-align: left; */
+            margin-top: 60px;
+            clear:both;
+        }
+        /* #project_tables  {
+            margin-bottom: 60px;
+            margin-top:40px;
+        } */
+        .button {
+            background-color: #337ab7;
+            border: none;
+            color: white;
+            padding: 2px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        td, th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        tr:nth-child(even){background-color: #f2f2f2;}
+        tr:hover {background-color: #ddd;}
+        th.milestone_table {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #337ab7;
+            color: white;
+        }
+        th.input_record {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #337ab7;
+            color: white;
+        }
+        th.project_tables, th.tdt_details_table {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #337ab7;
+            color: white;
+            padding: 8px;
+        }
+        #block_container
+        {
+            text-align:center;
+            margin-top:5px;
+        }
+        #bloc1, #bloc2
+        {
+            display:inline;
+        }
+        #select_container
+        {
+            text-align:center;
+            margin:50px;
+            margin-bottom:30px;
+        }
+        #select_content, #selectProject, #seltitle
+        {
+            display:inline;
+        }
+        #seltitle
+        {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 16px;
+            margin-right: 10px;
+            color: #337ab7;
+            font-weight: bold;
+        }
+        #select_content
+        {
+            border: 1px solid #ddd;
+            color: #337ab7;
+        }
+        #nonsel, #seltext
+        {
+            color: #337ab7;
+        }
+        #expbox
+        {
+            width: 60%;
+            padding:10px;
+            font-size: 14px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <!-- add logo and title -->
+        <div class="wrap">
+            <div class="page-header" style="border-bottom:0px;margin-left: 35px;">
+                <a href="{% url 'minutemanHome' %}" style="text-decoration: none;"><img src="{% static 'images/Company-Logo.png' %}" alt="Company Logo" align="left" height="75"
+                    width="75">
+                <h1 style="color:#3071a9;font-family:'sans-serif';">MINUTEMAN</h1></a>
+                <a href="mailto:minuteman_admin@Company.com?subject=Report%20issues&body=Please%20describe%20your%20issues:" style="color:#3071a9;font-family:'sans-serif'; position: absolute; right: 200px;">Help</a>
+            </div>
+        </div>
+        <!-- add menu bar? -->
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-18">
+                    {% block header %}{% endblock header %}
+                    {% block content %}{% endblock content %}
+                </div>
+            </div>
+        </div> 
+    </center>
+    <a id="back2Top" title="Back to top" href="#">&#10148;</a>
+</body>
+
+</html>
+

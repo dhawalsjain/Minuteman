@@ -1,0 +1,93 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block header %}
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+.left {
+  width: 25%;
+}
+
+.right {
+  width: 75%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+<div class="panel with-nav-tabs panel-primary">
+   <div class="panel-heading">
+      <ul class="nav nav-tabs">
+         <li class="active"><a href="{% url 'minutemanHome' %}" id="#tab1primary">Home</a></li>
+         <!--  -->
+         <!-- <li><a href="#PM" data-toggle="tab" id="PM-Tab">Biologics Pipeline</a></li> 
+         -->
+         <li><a href="#indexlab1" data-toggle="tab" id="indexlab2-Tab">lab1 LAB</a></li>
+         <li><a href="#indexlab2" data-toggle="tab" id="indexlab2-Tab">lab2 LAB</a></li>
+         <li><a href="#indexoncology" data-toggle="tab" id="indexlab2-Tab">ONCOLOGY LAB</a></li>
+         <!--
+         <li><a href="#AI-MLApps" data-toggle="tab" id="AI-MLApps-Tab">lab2 LAB</a></li>
+         <li><a href="#KnowledgeManagement" data-toggle="tab" id="KnowledgeManagement-Tab">Knowledge Management</a></li>
+         <li><a href="http://10.61.120.169:3838/deviation-analysis-modular-berkeley/" target="_self" id="FunctionData-Tab">Deviation Analysis</a></li>
+         <li><a href="#AutomationApps" data-toggle="tab" id="AutomationApps-Tab">Automation</a></li>
+         <li><a href="#ExternalData" data-toggle="tab" id="ExternalData-Tab">External Data</a></li>
+         <li><a href="#ManagementReports" data-toggle="tab" id="ManagementReports-Tab">Management Reports</a></li>
+         -->
+      </ul>
+   </div>
+   <div class="panel-body panel-height">
+      <div class="tab-content">
+         <div class="tab-pane fade in active" id="homecontent"> <!-- was tab1content -or home -->
+            <!-- block homepagecontent get extended/replaced by same named block in template home.html  -->
+            {% block homepagecontent %}
+            {% endblock homepagecontent %}
+         </div>
+         <div class="tab-pane fade" id="indexlab1">
+            <div class="row">
+               <div class="column left">
+		            <br><br><br><br><br><br><br>
+		            <p align="right"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="padding: 10px 45px; width: 220px;" href="{% url 'indexlab1' %}"> Visualize Data </a></p><br>
+                  <p align="right"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="padding: 10px 45px; width: 220px;" href="{% url 'rstudio' %}"> Launch RStudio </a></p><br>
+                  <p align="right"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="padding: 10px 45px; width: 220px;" href="{% url 'jupyterhub' %}"> Launch JupyterHub </a></p><br>
+                  <p align="right"><a class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="padding: 10px 45px; width: 220px;" href="https://gitlab.bayer.com/minuteman/bostonlab1"> Visit GitLab page </a></p><br>
+               </div>
+               <div class="column right">
+		            <br>
+                  <p><img src="{% static 'images/lab1_logo_large.png' %}" align="center" height="160px" width="180px"></p>
+		            <br>
+                  <p style="font-size: 20px; margin-left: 5%; margin-right: 15%; width: 80%;" align="left" >Chronic lung disease is a broad term for a number of diseases of the lung airways and other structures of the lung, including chronic obstructive pulmonary disease (COPD). About 65 million people suffer from COPD and 3 million die from it each year, making it the third leading cause of death worldwide.</p>
+                  <br>
+                  <p style="font-size: 20px; margin-left: 5%; margin-right: 15%; width: 80%;"  align="left">Pulmonary Drug discovery lab (lab1) is a partnership between Bayer, Partners HealthCare’s founding members Brigham and Women’s Hospital (BWH), and Massachusetts General Hospital (MGH). It is aimed at developing new drug candidates to treat chronic lung diseases.</p>
+                  <br>
+                  <p style="font-size: 20px; margin-left: 5%; margin-right: 15%; width: 80%;"  align="left">The joint lab hosts scientists from all three parties (i.e. Bayer, BWH, MGH). Bayer is investing more than USD 30 million to fund joint research projects over the next five years (2019-2024).</p>
+               </div>
+            </div>
+         </div>
+         <div class="tab-pane fade" id="indexlab2"> Under Construction ...</div>
+         <div class="tab-pane fade" id="indexoncology"> Under Construction ...</div>
+         <!-- <div class="tab-pane fade" id="pipeline">Pipeline Under Construction ...</div>
+         <div class="tab-pane fade" id="indexlab2"> Under Construction ...</div>
+         <div class="tab-pane fade" id="KnowledgeManagement"> Under Construction ...</div>
+         <div class="tab-pane fade" id="FunctionData"> Under Construction ...</div>
+         <div class="tab-pane fade" id="AutomationApps">Under Construction ...</div> 
+         <div class="tab-pane fade" id="ExternalData">Under Construction ...</div>
+         <div class="tab-pane fade" id="ManagementReports">Under Construction ...</div>
+         -->
+      </div>
+   </div>
+</div>
+{% endblock %}
+
