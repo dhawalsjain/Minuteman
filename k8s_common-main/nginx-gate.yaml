@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-gate
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-gate
+  template:
+    metadata:
+      labels:
+        app: nginx-gate
+    spec:
+      serviceAccount: secretsmanager
+      containers:
+      - name: nginx-gate
+        image: nginx_image
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+        env:
+          - name: --env
+            value: "DEV"
+        ports:
+        - containerPort: 80
+          name: nginx-gate
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-gate
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: NodePort
+  selector:
+    app: nginx-gate
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-gate
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
+  labels:
+    app: nginx-gate
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: nginx-gate
+          servicePort: 80
+

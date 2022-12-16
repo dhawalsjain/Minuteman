@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cellxgene
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cellxgene
+  template:
+    metadata:
+      labels:
+        app: cellxgene
+    spec:
+      serviceAccount: secretsmanager
+      containers:
+      - name: cellxgene
+        image: cellxgene_image
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+        env:
+          - name: --env
+            value: "DEV"
+        ports:
+        - containerPort: 5005
+          name: cellxgene
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cellxgene
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ports:
+  - port: 80
+    targetPort: 5005
+    protocol: TCP
+  type: NodePort
+  selector:
+    app: cellxgene
+
+

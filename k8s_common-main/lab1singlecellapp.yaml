@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: singlecellapp
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: singlecellapp
+  template:
+    metadata:
+      labels:
+        app: singlecellapp
+    spec:
+      serviceAccount: secretsmanager
+      containers:
+      - name: singlecellapp
+        image: lab1singlecellapp_image
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+        env:
+          - name: --env
+            value: "DEV"
+        ports:
+        - containerPort: 3838
+          name: singlecellapp
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: singlecellapp
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ports:
+  - port: 80
+    targetPort: 3838
+    protocol: TCP
+  type: NodePort
+  selector:
+    app: singlecellapp

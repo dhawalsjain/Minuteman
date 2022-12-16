@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boston
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: boston
+  template:
+    metadata:
+      labels:
+        app: boston
+    spec:
+      serviceAccount: boston
+      containers:
+      - name: boston
+        image: boston_image
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 2048Mi
+        env:
+          - name: --env
+            value: "DEV"
+        ports:
+        - containerPort: 80
+          name: boston
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: boston
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  type: NodePort
+  selector:
+    app: boston
+

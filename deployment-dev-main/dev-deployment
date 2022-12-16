@@ -1,0 +1,7 @@
+nginx-gate_version v1.2
+boston_version v1.10
+sciview_version v0.4.2
+cellxgene_version v1.0
+lab1singlecellapp_version v0.1
+lab1expressionapp_version v0.3
+k8s_common_gitlab_branch  main

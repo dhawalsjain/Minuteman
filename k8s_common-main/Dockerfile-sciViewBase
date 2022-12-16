@@ -1,0 +1,44 @@
+# get shiny server and R from the rocker project
+FROM rocker/shiny:4.1
+
+# system libraries
+# Try to only install system libraries you actually need
+# Package Manager is a good resource to help discover system deps
+RUN apt-get update && apt-get install -y \
+    apt-utils \
+    libxml2 \
+    libglpk-dev \
+    libcurl4-gnutls-dev \
+    libssl-dev
+
+# install R packages required
+# Change the packages list to suit your needs
+RUN R -e 'install.packages("shiny")'
+RUN R -e 'install.packages("shinyjs")'
+RUN R -e 'install.packages("markdown")'
+RUN R -e 'install.packages("dashboardthemes")'
+RUN R -e 'install.packages("shinydashboard")'
+RUN R -e 'install.packages("shinycssloaders")'
+RUN R -e 'install.packages("shinyWidgets")'
+RUN R -e 'install.packages("shinyBS")'
+RUN R -e 'install.packages("shinyFiles")'
+RUN R -e 'install.packages("highcharter")'
+RUN R -e 'install.packages("ggvis")'
+RUN R -e 'install.packages("plotly")'
+RUN R -e 'install.packages("rasterly")'
+RUN R -e 'install.packages("png")'
+RUN R -e 'install.packages("data.table")'
+RUN R -e 'install.packages("DT")'
+RUN R -e 'install.packages("optparse")'
+RUN R -e 'install.packages("gprofiler2")'
+RUN R -e 'install.packages("RSQLite")'
+RUN R -e 'install.packages("reshape")'
+RUN R -e 'install.packages("reshape2")'
+RUN R -e 'install.packages("GenomicRanges")'
+RUN R -e 'install.packages("ggthemes")'
+RUN R -e 'install.packages("ggrepel")'
+RUN R -e 'install.packages("FNN")'
+RUN R -e 'install.packages("Rtsne")'
+RUN R -e 'install.packages("BiocManager")'
+RUN R -e "BiocManager::install('GenomicRanges')"
+
